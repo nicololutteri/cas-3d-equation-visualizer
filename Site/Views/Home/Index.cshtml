@@ -1,0 +1,76 @@
+﻿@using Microsoft.JSInterop
+@{
+    ViewData["Title"] = "Home Page";
+}
+@inject IJSRuntime JS
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>CAS</title>
+
+    <script type="text/javascript" src="js/three.js"></script>
+    <script type="text/javascript" src="js/jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
+    <script type="text/javascript" src="js/ConvexGeometry.js"></script>
+    <script type="text/javascript" src="js/dat.gui.js"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+@*    <style>
+        body {
+            /* set margin to 0 and overflow to hidden, to go fullscreen */
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>*@
+</head>
+<body>
+    @using (Html.BeginForm("Index", "", FormMethod.Post))
+    {
+        <div>
+            <label>Range</label>
+            <br />
+            @Html.TextBox("startRange", "-10")
+            <span>-</span>
+            @Html.TextBox("endRange", "10")
+
+            <br />
+            <br />
+
+            <label>Insert the equation</label>
+            <br />
+            @Html.TextArea("equation", "+E[+P[1*z^1]=+P[1*x^1;1*y^1]]")
+
+            <br />
+            <br />
+            <br />
+
+            <button type="submit" id=”btnSubmit” name=”Submit” class="btn btn-primary">Submit</button>
+            <br />
+            <label name="errorLabel" class="redFont">
+                
+                @ViewBag.Error 
+
+            </label>
+
+            <br />
+            <br />
+        </div>
+    }
+
+    <div id="WebGL-output" class="content">
+    </div>
+
+    <script type="text/javascript">
+        var pointsData = '@ViewBag.Points';
+        $(document).ready(function(){generatePoints()});
+    </script>
+
+    <script type="text/javascript" src="js/showGraph.js">
+    </script>
+</body>
+</html>
